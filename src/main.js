@@ -2,7 +2,7 @@ import {render} from './components/utils.js';
 import {createTaskMenuTemplate} from './components/menu.js';
 import {createTaskFilterTemplate} from './components/filters.js';
 import {createTaskCardTemplate} from './components/event-item.js';
-import {createEventListTemplate} from './components/enent-list.js';
+import {createEventListTemplate} from './components/event-list.js';
 import {createTripDayItemTemplate} from './components/trip-item.js';
 import {createTripDayWrapperTemplate} from './components/trip-list.js';
 import {createTaskFormTemplate} from './components/form.js';
