@@ -1,30 +1,3 @@
-const createTripDayWrapperTemplate = () => {
-  return (
-    `
-    <ul class="trip-days">
-    </ul>
-    `
-  );
-};
-
-const createTripDayItemTemplate = () => {
-  return (
-    `
-    <li class="trip-days__item  day">
-      <div class="day__info"></div>
-    </li>
-    `
-  );
-};
-
-const createEventListTemplate = () => {
-  return (
-    `
-    <ul class="trip-events__list">
-    </ul>
-    `
-  );
-};
 
 const createTaskCardTemplate = () => {
   return (
@@ -65,4 +38,4 @@ const createTaskCardTemplate = () => {
 };
 
 
-export {createTripDayWrapperTemplate, createTripDayItemTemplate, createEventListTemplate, createTaskCardTemplate};
+export {createTaskCardTemplate};

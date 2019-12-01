@@ -1,7 +1,10 @@
 import {render} from './components/utils.js';
 import {createTaskMenuTemplate} from './components/menu.js';
 import {createTaskFilterTemplate} from './components/filters.js';
-import {createTripDayWrapperTemplate, createTripDayItemTemplate, createEventListTemplate, createTaskCardTemplate} from './components/card.js';
+import {createTaskCardTemplate} from './components/event-item.js';
+import {createEventListTemplate} from './components/enent-list.js';
+import {createTripDayItemTemplate} from './components/trip-item.js';
+import {createTripDayWrapperTemplate} from './components/trip-list.js';
 import {createTaskFormTemplate} from './components/form.js';
 import {createTaskTripInfoTemplate} from './components/information.js';
 
