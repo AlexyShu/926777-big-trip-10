@@ -8,6 +8,8 @@ import {createTripDayWrapperTemplate} from './components/trip-list.js';
 import {createTaskFormTemplate} from './components/form.js';
 import {createTaskTripInfoTemplate} from './components/information.js';
 
+import {filterItem} from './mock/filters.js';
+
 const siteMenuElement = document.querySelector(`.trip-main__trip-controls h2`);
 const siteFilterElement = document.querySelector(`.trip-main__trip-controls`);
 const siteFormElement = document.querySelector(`.trip-events h2`);
@@ -15,7 +17,8 @@ const siteInfoTripElement = document.querySelector(`.trip-main__trip-info`);
 const siteTripEventElement = document.querySelector(`.trip-events`);
 
 render(siteMenuElement, createTaskMenuTemplate(), `afterend`);
-render(siteFilterElement, createTaskFilterTemplate(), `beforeend`);
+// render(siteFilterElement, createTaskFilterTemplate(), `beforeend`);
+render(siteFilterElement, new createTaskFilterTemplate(filterItem), `beforeend`);
 render(siteFormElement, createTaskFormTemplate(), `afterend`);
 render(siteInfoTripElement, createTaskTripInfoTemplate(), `afterbegin`);
 render(siteTripEventElement, createTripDayWrapperTemplate(), `beforeend`);
