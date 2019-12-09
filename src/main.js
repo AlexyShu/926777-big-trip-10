@@ -1,4 +1,4 @@
-import {render} from './components/utils.js';
+import {render} from './utils.js';
 import {createTaskMenuTemplate} from './components/menu.js';
 import {createTaskFilterTemplate} from './components/filters.js';
 import {createTaskCardTemplate} from './components/event-item.js';
@@ -8,7 +8,9 @@ import {createTripDayWrapperTemplate} from './components/trip-list.js';
 import {createTaskFormTemplate} from './components/form.js';
 import {createTaskTripInfoTemplate} from './components/information.js';
 
-import {filterItem} from './mock/filters.js';
+import {filters} from './mock/filters.js';
+import {menuItems} from './mock/menu.js';
+import {towns} from './mock/information.js';
 
 const siteMenuElement = document.querySelector(`.trip-main__trip-controls h2`);
 const siteFilterElement = document.querySelector(`.trip-main__trip-controls`);
@@ -16,11 +18,10 @@ const siteFormElement = document.querySelector(`.trip-events h2`);
 const siteInfoTripElement = document.querySelector(`.trip-main__trip-info`);
 const siteTripEventElement = document.querySelector(`.trip-events`);
 
-render(siteMenuElement, createTaskMenuTemplate(), `afterend`);
-// render(siteFilterElement, createTaskFilterTemplate(), `beforeend`);
-render(siteFilterElement, new createTaskFilterTemplate(filterItem), `beforeend`);
+render(siteMenuElement, createTaskMenuTemplate(menuItems), `afterend`);
+render(siteFilterElement, createTaskFilterTemplate(filters), `beforeend`);
 render(siteFormElement, createTaskFormTemplate(), `afterend`);
-render(siteInfoTripElement, createTaskTripInfoTemplate(), `afterbegin`);
+render(siteInfoTripElement, createTaskTripInfoTemplate(towns), `afterbegin`);
 render(siteTripEventElement, createTripDayWrapperTemplate(), `beforeend`);
 
 const siteTripDayElement = document.querySelector(`.trip-days`);

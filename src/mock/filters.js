@@ -1,4 +1,4 @@
-const filterItem = [
+const filters = [
   {
     name: `everything`,
     title: `Everything`
@@ -13,4 +13,4 @@ const filterItem = [
   },
 ];
 
-export {filterItem};
+export {filters};

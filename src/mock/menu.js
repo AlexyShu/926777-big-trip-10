@@ -1,12 +1,12 @@
-const menuItem = [
+const menuItems = [
   {
     name: `Table`,
-    active: true
+    isActive: true
   },
   {
     name: `Stats`,
-    active: false
+    isActive: false
   }
 ];
 
-export {menuItem};
+export {menuItems};
