@@ -14,9 +14,10 @@ export const createTaskFilterTemplate = (filters) => {
   const filtersTemplate = filters.map((it, i) => createFilterTemplate(it, i === 0)).join(`\n`);
   return (
     `
-    <form class="trip-filters  trip-filters--hidden" action="#" method="get">
+    <form class="trip-filters  trip-filters" action="#" method="get">
       ${filtersTemplate}
       <button class="visually-hidden" type="submit">Accept filter</button>
     </form>
-  `);
+  `
+  );
 };

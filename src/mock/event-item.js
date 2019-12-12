@@ -1,15 +1,50 @@
+import {getRandomArrayItem} from '../utils.js';
+
 const types = [
-  `taxi`,
-  `bus`,
-  `train`,
-  `ship`,
-  `transport`,
-  `drive`,
-  `flight`,
-  `check-in`,
-  `sightseeing`,
-  `restaurant`,
-  `trip`
+  {
+    icon: `taxi`,
+    name: `taxi to`
+  },
+  {
+    icon: `train`,
+    name: `train to`
+  },
+  {
+    icon: `bus`,
+    name: `bus to`
+  },
+  {
+    icon: `ship`,
+    name: `ship to`
+  },
+  {
+    icon: `transport`,
+    name: `transport to`
+  },
+  {
+    icon: `drive`,
+    name: `drive to`
+  },
+  {
+    icon: `flight`,
+    name: `flight to`
+  },
+  {
+    name: `check-in`,
+    sring: `check-in in hotel in`
+  },
+  {
+    name: `sightseeing`,
+    sring: `sightseeing in`
+  },
+  {
+    name: `restaurant`,
+    sring: `restaurant in`
+  },
+  {
+    name: `trip`,
+    sring: `trip to`
+  }
 ];
 
 const offers = [
@@ -35,4 +70,6 @@ const offers = [
   }
 ];
 
-export {types, offers};
+const offer = getRandomArrayItem(offers);
+
+export {types, offer, offers};

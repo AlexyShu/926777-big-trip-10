@@ -30,10 +30,10 @@ const getTimeFormat = (dateUnix) => {
 const getDateFormat = (dateUnix) => {
   const date = new Date(dateUnix);
 
-  const yyyy = date.getFullYear();
-  const mm = getZeroFormat(date.getMonth() + 1);
-  const dd = getZeroFormat(date.getDate());
-  return `${yyyy}-${mm}-${dd}`;
+  const year = date.getFullYear();
+  const month = getZeroFormat(date.getMonth() + 1);
+  const day = getZeroFormat(date.getDate());
+  return `${year}-${month}-${day}`;
 };
 
 const getRandomDate = () => {
