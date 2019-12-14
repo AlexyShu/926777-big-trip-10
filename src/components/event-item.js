@@ -42,7 +42,7 @@ import {date, getTimeFormat, getDateFormat, getRandomArrayItem} from '../utils.j
 import {types, offer, offers} from '../mock/event-item.js';
 import {towns} from '../mock/information.js';
 
-const createOffersTemplate = (items) => items.map(() => {
+const createOffersTemplate = (items) => items.map((offer) => {
   return (
     `
     <li class="event__offer">
