@@ -1,3 +1,5 @@
+import {createElement} from "../utils";
+
 const createFilterTemplate = (filter, isChecked) => {
   const {name, title} = filter;
   return (
@@ -10,8 +12,8 @@ const createFilterTemplate = (filter, isChecked) => {
   );
 };
 
-export const createTaskFilterTemplate = (filters) => {
-  const filtersTemplate = filters.map((it, i) => createFilterTemplate(it, i === 0)).join(`\n`);
+const createTaskFilterTemplate = (items) => {
+  const filtersTemplate = items.map((it, i) => createFilterTemplate(it, i === 0)).join(`\n`);
   return (
     `
     <form class="trip-filters  trip-filters" action="#" method="get">
@@ -21,3 +23,22 @@ export const createTaskFilterTemplate = (filters) => {
   `
   );
 };
+
+export default class SiteFilter {
+  constructor(filters) {
+    this._element = null;
+    this._filters = filters;
+  }
+  getTemplate() {
+    return createTaskFilterTemplate(this._filters);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}

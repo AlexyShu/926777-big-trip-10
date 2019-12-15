@@ -1,6 +1,33 @@
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
+const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`,
+  AFTEREND: `afterend`
 };
+
+const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+    case RenderPosition.AFTEREND:
+      container.after(element);
+      break;
+  }
+};
+
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+// const render = (container, template, place) => {
+//   container.insertAdjacentHTML(place, template);
+// };
 
 const getRandomIntegerNumber = (min, max) => {
   return min + Math.floor(max * Math.random());
@@ -46,4 +73,4 @@ const getRandomDate = () => {
 
 const date = getRandomDate();
 
-export {render, date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
+export {render, RenderPosition, date, createElement, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
