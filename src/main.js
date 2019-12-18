@@ -64,6 +64,7 @@ const editForm = () => {
 };
 
 eventEditButton.addEventListener(`click`, editItem());
+render(siteEventSortElement, eventForm.getElement(), RenderPosition.AFTEREND);
 eventEditForm.addEventListener(`submit`, editForm());
 
-render(siteEventSortElement, new SiteFormComponent().getElement(), RenderPosition.AFTEREND);
+
