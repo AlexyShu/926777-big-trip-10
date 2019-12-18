@@ -6,10 +6,8 @@ export default class SiteEventList {
   }
   getTemplate() {
     return (
-      `
-      <ul class="trip-events__list">
-      </ul>
-      `
+      `<ul class="trip-events__list">
+      </ul>`
     );
   }
   getElement() {

@@ -6,10 +6,8 @@ export default class SiteTripList {
   }
   getTemplate() {
     return (
-      `
-      <ul class="trip-days">
-      </ul>
-      `
+      `<ul class="trip-days">
+      </ul>`
     );
   }
   getElement() {

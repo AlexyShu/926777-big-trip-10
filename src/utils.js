@@ -1,7 +1,7 @@
 const RenderPosition = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`,
-  AFTEREND: `afterend`
+  AFTERBEGIN: `prepend`,
+  AFTEREND: `afterend`,
+  BEFOREEND: `beforeend`
 };
 
 const render = (container, element, place) => {
@@ -21,13 +21,8 @@ const render = (container, element, place) => {
 const createElement = (template) => {
   const newElement = document.createElement(`div`);
   newElement.innerHTML = template;
-
   return newElement.firstChild;
 };
-
-// const render = (container, template, place) => {
-//   container.insertAdjacentHTML(place, template);
-// };
 
 const getRandomIntegerNumber = (min, max) => {
   return min + Math.floor(max * Math.random());

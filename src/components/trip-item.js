@@ -6,11 +6,9 @@ export default class SiteTripItem {
   }
   getTemplate() {
     return (
-      `
-      <li class="trip-days__item  day">
+      `<li class="trip-days__item  day">
         <div class="day__info"></div>
-      </li>
-      `
+      </li>`
     );
   }
   getElement() {
