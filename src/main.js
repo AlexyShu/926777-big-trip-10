@@ -22,10 +22,6 @@ const siteTripEventElement = document.querySelector(`.trip-events`);
 render(siteMenuElement, new SiteMenuComponent(menuItems).getElement(), RenderPosition.AFTEREND);
 render(siteFilterElement, new SiteFilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
 render(siteFormElement, new SiteEventSortComponent().getElement(), RenderPosition.AFTEREND);
-
-// const siteEventSortElement = document.querySelector(`.trip-sort`);
-
-// render(siteEventSortElement, new SiteFormComponent().getElement(), RenderPosition.AFTEREND);
 render(siteInfoTripElement, new SiteInfoComponent().getElement(), RenderPosition.AFTERBEGIN);
 render(siteTripEventElement, new SiteTripListComponent().getElement(), RenderPosition.BEFOREEND);
 
@@ -39,32 +35,28 @@ render(siteDayItemElement, new SiteEventListComponent().getElement(), RenderPosi
 
 const siteEventListElement = document.querySelector(`.trip-events__list`);
 
-const EVENT_CARD = 3;
+const EVENT_COUNT = 7;
 
-new Array(EVENT_CARD)
-.fill(``)
-.forEach(() => render(siteEventListElement, new SiteEventItemComponent().getElement(), RenderPosition.BEFOREEND));
-
-
-const eventForm = new SiteFormComponent();
-const eventItem = new SiteEventItemComponent();
-
-
-const eventEditButton = document.querySelector(`.event__rollup-btn`);
-const eventEditForm = eventForm.getElement();
-
-const editItem = () => {
-  siteEventListElement.replaceChild(eventForm.getElement(), eventItem.getElement());
-};
-
-const siteEventSortElement = document.querySelector(`.trip-sort`);
-
-const editForm = () => {
-  siteEventSortElement.replaceChild(eventItem.getElement(), eventForm.getElement());
-};
-
-eventEditButton.addEventListener(`click`, editItem());
-render(siteEventSortElement, eventForm.getElement(), RenderPosition.AFTEREND);
-eventEditForm.addEventListener(`submit`, editForm());
-
+for (let i = 0; i < EVENT_COUNT; i++) {
+  const eventItem = new SiteEventItemComponent();
+  const eventForm = new SiteFormComponent();
+  const replaceFormToEvent = () => {
+    siteEventListElement.replaceChild(eventItem.getElement(), eventForm.getElement());
+  };
+  const replaceEventToForm = () => {
+    siteEventListElement.replaceChild(eventForm.getElement(), eventItem.getElement());
+  };
+  const rollupButton = eventItem.getElement().querySelector(`.event__rollup-btn`);
+  rollupButton.addEventListener(`click`, replaceEventToForm);
+  const saveButton = eventForm.getElement().querySelector(`.event__save-btn`);
+  const resetButton = eventForm.getElement().querySelector(`.event__reset-btn`);
+  saveButton.addEventListener(`click`, replaceFormToEvent);
+  resetButton.addEventListener(`click`, replaceFormToEvent);
+  const submitForm = eventForm.getElement();
+  submitForm.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    submitForm.replaceChild(eventItem.getElement(), eventForm.getElement());
+  });
+  render(siteEventListElement, eventItem.getElement(), RenderPosition.BEFOREEND);
+}
 

@@ -47,6 +47,7 @@ const createTaskCardTemplate = () => {
   );
 };
 
+
 export default class SiteEventItem {
   constructor() {
     this._element = null;
