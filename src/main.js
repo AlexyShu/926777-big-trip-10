@@ -8,6 +8,7 @@ import SiteTripListComponent from './components/trip-list.js';
 import SiteFormComponent from './components/form.js';
 import SiteInfoComponent from './components/information.js';
 import SiteEventSortComponent from './components/event-sort.js';
+import SiteNoEventComponent from './components/no-event.js';
 
 import {menuItems} from './mock/menu.js';
 import {filters} from './mock/filters.js';
@@ -37,9 +38,14 @@ const siteEventListElement = document.querySelector(`.trip-events__list`);
 
 const EVENT_COUNT = 7;
 
+if (EVENT_COUNT === 0) {
+  render(siteTripEventElement, new SiteNoEventComponent().getElement(), RenderPosition.BEFOREEND);
+}
+
 for (let i = 0; i < EVENT_COUNT; i++) {
   const eventItem = new SiteEventItemComponent();
   const eventForm = new SiteFormComponent();
+
   const replaceFormToEvent = () => {
     siteEventListElement.replaceChild(eventItem.getElement(), eventForm.getElement());
   };
@@ -68,7 +74,5 @@ for (let i = 0; i < EVENT_COUNT; i++) {
   resetButton.addEventListener(`click`, replaceFormToEvent);
 
   render(siteEventListElement, eventItem.getElement(), RenderPosition.BEFOREEND);
-
-
 }
 
