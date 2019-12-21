@@ -1,18 +1,6 @@
-/* const createTaskMenuTemplate = () => {
-  return (
-    `
-    <nav class="trip-controls__trip-tabs  trip-tabs">
-      <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Table</a>
-      <a class="trip-tabs__btn" href="#">Stats</a>
-    </nav>
-    `
-  );
-};
-
-export {createTaskMenuTemplate}; */
+import {createElement} from "../utils";
 
 const createTaskMenuTemplate = (items) => {
-
   return (
     `<nav class="trip-controls__trip-tabs trip-tabs">
     ${items.map(({name, isActive}) => {
@@ -22,4 +10,23 @@ const createTaskMenuTemplate = (items) => {
   );
 };
 
-export {createTaskMenuTemplate};
+export default class SiteMenu {
+  constructor(menuItems) {
+    this._element = null;
+    this._menuItems = menuItems;
+  }
+  getTemplate() {
+    return createTaskMenuTemplate(this._menuItems);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
+
+
