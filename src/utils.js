@@ -4,6 +4,10 @@ const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
+const KeyCode = {
+  ESC: 27
+};
+
 const render = (container, element, place) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN:
@@ -68,4 +72,4 @@ const getRandomDate = () => {
 
 const date = getRandomDate();
 
-export {render, RenderPosition, date, createElement, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
+export {render, RenderPosition, date, KeyCode, createElement, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
