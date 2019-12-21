@@ -58,16 +58,17 @@ for (let i = 0; i < EVENT_COUNT; i++) {
   const resetButton = eventForm.getElement().querySelector(`.event__reset-btn`);
   const formElement = eventForm.getElement();
 
-  formElement.addEventListener(`submit`, (evt) => {
-    evt.preventDefault();
-    replaceFormToEvent();
-  });
-
-  formElement.addEventListener(`keydown`, (evt) => {
+  document.addEventListener(`keydown`, (evt) => {
     if (evt.keyCode === KeyCode.ESC) {
       evt.preventDefault();
       replaceFormToEvent();
     }
+
+    formElement.addEventListener(`submit`, (evt) => {
+      evt.preventDefault();
+      replaceFormToEvent();
+    });
+
   });
 
   saveButton.addEventListener(`click`, replaceFormToEvent);
