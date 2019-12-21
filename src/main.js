@@ -1,4 +1,4 @@
-import {render, RenderPosition} from './utils.js';
+import {render, RenderPosition, KeyCode} from './utils.js';
 import SiteMenuComponent from './components/menu.js';
 import SiteFilterComponent from './components/filters.js';
 import SiteEventItemComponent from './components/event-item.js';
@@ -50,13 +50,25 @@ for (let i = 0; i < EVENT_COUNT; i++) {
   rollupButton.addEventListener(`click`, replaceEventToForm);
   const saveButton = eventForm.getElement().querySelector(`.event__save-btn`);
   const resetButton = eventForm.getElement().querySelector(`.event__reset-btn`);
+  const formElement = eventForm.getElement();
+
+  formElement.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    replaceFormToEvent();
+  });
+
+  formElement.addEventListener(`keydown`, (evt) => {
+    if (evt.keyCode === KeyCode.ESC) {
+      evt.preventDefault();
+      replaceFormToEvent();
+    }
+  });
+
   saveButton.addEventListener(`click`, replaceFormToEvent);
   resetButton.addEventListener(`click`, replaceFormToEvent);
-  const submitForm = eventForm.getElement();
-  submitForm.addEventListener(`submit`, (evt) => {
-    evt.preventDefault();
-    submitForm.replaceChild(eventItem.getElement(), eventForm.getElement());
-  });
+
   render(siteEventListElement, eventItem.getElement(), RenderPosition.BEFOREEND);
+
+
 }
 
