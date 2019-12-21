@@ -53,27 +53,27 @@ for (let i = 0; i < EVENT_COUNT; i++) {
     siteEventListElement.replaceChild(eventForm.getElement(), eventItem.getElement());
   };
   const rollupButton = eventItem.getElement().querySelector(`.event__rollup-btn`);
-  rollupButton.addEventListener(`click`, replaceEventToForm);
-  const saveButton = eventForm.getElement().querySelector(`.event__save-btn`);
+  rollupButton.addEventListener(`click`, () => {
+    replaceEventToForm();
+    document.addEventListener(`keydown`, onEscPress);
+  });
+
   const resetButton = eventForm.getElement().querySelector(`.event__reset-btn`);
   const formElement = eventForm.getElement();
 
-  document.addEventListener(`keydown`, (evt) => {
+  formElement.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    replaceFormToEvent();
+  });
+
+  const onEscPress = (evt) => {
     if (evt.keyCode === KeyCode.ESC) {
       evt.preventDefault();
       replaceFormToEvent();
+      document.removeEventListener(`keydown`, onEscPress);
     }
+  };
 
-    formElement.addEventListener(`submit`, (evt) => {
-      evt.preventDefault();
-      replaceFormToEvent();
-    });
-
-  });
-
-  saveButton.addEventListener(`click`, replaceFormToEvent);
   resetButton.addEventListener(`click`, replaceFormToEvent);
-
   render(siteEventListElement, eventItem.getElement(), RenderPosition.BEFOREEND);
 }
-
