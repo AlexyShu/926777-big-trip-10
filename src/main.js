@@ -1,4 +1,4 @@
-import {render, RenderPosition, KeyCode} from './utils.js';
+import {render, RenderPosition, KeyCode} from './utils/render.js';
 import SiteMenuComponent from './components/menu.js';
 import SiteFilterComponent from './components/filters.js';
 import SiteEventItemComponent from './components/event-item.js';
@@ -20,26 +20,26 @@ const siteInfoTripElement = document.querySelector(`.trip-main__trip-info`);
 const siteTripEventElement = document.querySelector(`.trip-events`);
 
 
-render(siteMenuElement, new SiteMenuComponent(menuItems).getElement(), RenderPosition.AFTEREND);
-render(siteFilterElement, new SiteFilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
-render(siteFormElement, new SiteEventSortComponent().getElement(), RenderPosition.AFTEREND);
-render(siteInfoTripElement, new SiteInfoComponent().getElement(), RenderPosition.AFTERBEGIN);
-render(siteTripEventElement, new SiteTripListComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteMenuElement, new SiteMenuComponent(menuItems), RenderPosition.AFTEREND);
+render(siteFilterElement, new SiteFilterComponent(filters), RenderPosition.BEFOREEND);
+render(siteFormElement, new SiteEventSortComponent(), RenderPosition.AFTEREND);
+render(siteInfoTripElement, new SiteInfoComponent(), RenderPosition.AFTERBEGIN);
+render(siteTripEventElement, new SiteTripListComponent(), RenderPosition.BEFOREEND);
 
 const siteTripDayElement = document.querySelector(`.trip-days`);
 
-render(siteTripDayElement, new SiteTripItemComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteTripDayElement, new SiteTripItemComponent(), RenderPosition.BEFOREEND);
 
 const siteDayItemElement = document.querySelector(`.trip-days__item`);
 
-render(siteDayItemElement, new SiteEventListComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteDayItemElement, new SiteEventListComponent(), RenderPosition.BEFOREEND);
 
 const siteEventListElement = document.querySelector(`.trip-events__list`);
 
 const EVENT_COUNT = 7;
 
 if (EVENT_COUNT === 0) {
-  render(siteTripEventElement, new SiteNoEventComponent().getElement(), RenderPosition.BEFOREEND);
+  render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
 }
 
 for (let i = 0; i < EVENT_COUNT; i++) {
@@ -75,5 +75,5 @@ for (let i = 0; i < EVENT_COUNT; i++) {
   };
 
   resetButton.addEventListener(`click`, replaceFormToEvent);
-  render(siteEventListElement, eventItem.getElement(), RenderPosition.BEFOREEND);
+  render(siteEventListElement, eventItem, RenderPosition.BEFOREEND);
 }

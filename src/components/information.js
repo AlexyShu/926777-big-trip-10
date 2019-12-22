@@ -1,4 +1,4 @@
-import {getRandomIntegerNumber} from '../utils.js';
+import {getRandomIntegerNumber} from '../utils/common.js';
 import {towns} from '../mock/information.js';
 import AbstractComponent from './abstract-component.js';
 

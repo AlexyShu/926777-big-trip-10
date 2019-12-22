@@ -1,33 +1,3 @@
-const RenderPosition = {
-  AFTERBEGIN: `prepend`,
-  AFTEREND: `afterend`,
-  BEFOREEND: `beforeend`
-};
-
-const KeyCode = {
-  ESC: 27
-};
-
-const render = (container, element, place) => {
-  switch (place) {
-    case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
-      break;
-    case RenderPosition.BEFOREEND:
-      container.append(element);
-      break;
-    case RenderPosition.AFTEREND:
-      container.after(element);
-      break;
-  }
-};
-
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstChild;
-};
-
 const getRandomIntegerNumber = (min, max) => {
   return min + Math.floor(max * Math.random());
 };
@@ -72,4 +42,4 @@ const getRandomDate = () => {
 
 const date = getRandomDate();
 
-export {render, RenderPosition, date, KeyCode, createElement, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
+export {date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};

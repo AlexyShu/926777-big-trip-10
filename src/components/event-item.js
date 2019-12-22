@@ -1,4 +1,4 @@
-import {date, getTimeFormat, getDateFormat, getRandomArrayItem} from '../utils.js';
+import {date, getTimeFormat, getDateFormat, getRandomArrayItem} from '../utils/common.js';
 import {types, offer, offers} from '../mock/event-item.js';
 import {towns} from '../mock/information.js';
 import AbstractComponent from './abstract-component.js';
