@@ -1,6 +1,6 @@
 import {getRandomIntegerNumber, getRandomArrayItem} from '../utils.js';
 import {descriptions, pictures} from '../mock/form.js';
-import {createElement} from "../utils";
+import AbstractComponent from './abstract-component.js';
 
 const getRandomDescription = () => {
   const descriptionLength = getRandomIntegerNumber(1, 3);
@@ -123,20 +123,8 @@ const createTaskFormTemplate = () => {
   );
 };
 
-export default class SiteForm {
-  constructor() {
-    this._element = null;
-  }
+export default class SiteForm extends AbstractComponent {
   getTemplate() {
     return createTaskFormTemplate();
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

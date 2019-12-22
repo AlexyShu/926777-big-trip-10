@@ -1,7 +1,7 @@
 import {date, getTimeFormat, getDateFormat, getRandomArrayItem} from '../utils.js';
 import {types, offer, offers} from '../mock/event-item.js';
 import {towns} from '../mock/information.js';
-import {createElement} from "../utils";
+import AbstractComponent from './abstract-component.js';
 
 const createOffersTemplate = (items) => items.map((offer) => {
   return (
@@ -48,20 +48,8 @@ const createTaskCardTemplate = () => {
 };
 
 
-export default class SiteEventItem {
-  constructor() {
-    this._element = null;
-  }
+export default class SiteEventItem extends AbstractComponent {
   getTemplate() {
     return createTaskCardTemplate();
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

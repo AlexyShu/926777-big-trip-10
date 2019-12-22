@@ -1,11 +1,8 @@
 import {getRandomIntegerNumber} from '../utils.js';
 import {towns} from '../mock/information.js';
-import {createElement} from "../utils";
+import AbstractComponent from './abstract-component.js';
 
-export default class SiteInfo {
-  constructor() {
-    this._element = null;
-  }
+export default class SiteInfo extends AbstractComponent {
   getTemplate() {
     return (
       `<div class="trip-info__main">
@@ -13,14 +10,5 @@ export default class SiteInfo {
         <p class="trip-info__dates">Mar 18&nbsp;&mdash;&nbsp;21</p>
       </div>`
     );
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }
