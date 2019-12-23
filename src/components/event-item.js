@@ -52,4 +52,7 @@ export default class SiteEventItem extends AbstractComponent {
   getTemplate() {
     return createTaskCardTemplate();
   }
+  setRollupButton(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, handler);
+  }
 }

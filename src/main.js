@@ -1,14 +1,15 @@
-import {render, RenderPosition, KeyCode} from './utils/render.js';
+import {render, RenderPosition} from './utils/render.js';
 import SiteMenuComponent from './components/menu.js';
 import SiteFilterComponent from './components/filters.js';
-import SiteEventItemComponent from './components/event-item.js';
+// import SiteEventItemComponent from './components/event-item.js';
 import SiteEventListComponent from './components/event-list.js';
 import SiteTripItemComponent from './components/trip-item.js';
 import SiteTripListComponent from './components/trip-list.js';
-import SiteFormComponent from './components/form.js';
+// import SiteFormComponent from './components/form.js';
 import SiteInfoComponent from './components/information.js';
 import SiteEventSortComponent from './components/event-sort.js';
-import SiteNoEventComponent from './components/no-event.js';
+// import SiteNoEventComponent from './components/no-event.js';
+import TripContropper from './controller.js';
 
 import {menuItems} from './mock/menu.js';
 import {filters} from './mock/filters.js';
@@ -34,46 +35,43 @@ const siteDayItemElement = document.querySelector(`.trip-days__item`);
 
 render(siteDayItemElement, new SiteEventListComponent(), RenderPosition.BEFOREEND);
 
-const siteEventListElement = document.querySelector(`.trip-events__list`);
+const tripController = new TripContropper();
 
-const EVENT_COUNT = 7;
+tripController.renderEvents();
 
-if (EVENT_COUNT === 0) {
-  render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
-}
+// const siteEventListElement = document.querySelector(`.trip-events__list`);
 
-for (let i = 0; i < EVENT_COUNT; i++) {
-  const eventItem = new SiteEventItemComponent();
-  const eventForm = new SiteFormComponent();
+// const EVENT_COUNT = 7;
 
-  const replaceFormToEvent = () => {
-    siteEventListElement.replaceChild(eventItem.getElement(), eventForm.getElement());
-  };
-  const replaceEventToForm = () => {
-    siteEventListElement.replaceChild(eventForm.getElement(), eventItem.getElement());
-  };
-  const rollupButton = eventItem.getElement().querySelector(`.event__rollup-btn`);
-  rollupButton.addEventListener(`click`, () => {
-    replaceEventToForm();
-    document.addEventListener(`keydown`, onEscPress);
-  });
+// if (EVENT_COUNT === 0) {
+//   render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
+// }
 
-  const resetButton = eventForm.getElement().querySelector(`.event__reset-btn`);
-  const formElement = eventForm.getElement();
-
-  formElement.addEventListener(`submit`, (evt) => {
-    evt.preventDefault();
-    replaceFormToEvent();
-  });
-
-  const onEscPress = (evt) => {
-    if (evt.keyCode === KeyCode.ESC) {
-      evt.preventDefault();
-      replaceFormToEvent();
-      document.removeEventListener(`keydown`, onEscPress);
-    }
-  };
-
-  resetButton.addEventListener(`click`, replaceFormToEvent);
-  render(siteEventListElement, eventItem, RenderPosition.BEFOREEND);
-}
+// for (let i = 0; i < EVENT_COUNT; i++) {
+//   const eventItem = new SiteEventItemComponent();
+//   const eventForm = new SiteFormComponent();
+//   const replaceFormToEvent = () => {
+//     siteEventListElement.replaceChild(eventItem.getElement(), eventForm.getElement());
+//   };
+//   const replaceEventToForm = () => {
+//     siteEventListElement.replaceChild(eventForm.getElement(), eventItem.getElement());
+//   };
+//   const afterRollupButtonClick = () => {
+//     replaceEventToForm();
+//     document.addEventListener(`keydown`, onEscPress);
+//   };
+//   eventItem.setRollupButton(afterRollupButtonClick);
+//   eventForm.getElement().addEventListener(`submit`, (evt) => {
+//     evt.preventDefault();
+//     replaceFormToEvent();
+//   });
+//   const onEscPress = (evt) => {
+//     if (evt.keyCode === KeyCode.ESC) {
+//       evt.preventDefault();
+//       replaceFormToEvent();
+//       document.removeEventListener(`keydown`, onEscPress);
+//     }
+//   };
+//   eventForm.setResetButton(replaceFormToEvent);
+//   render(siteEventListElement, eventItem, RenderPosition.BEFOREEND);
+// }

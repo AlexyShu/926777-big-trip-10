@@ -127,4 +127,8 @@ export default class SiteForm extends AbstractComponent {
   getTemplate() {
     return createTaskFormTemplate();
   }
+
+  setResetButton(handler) {
+    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, handler);
+  }
 }
