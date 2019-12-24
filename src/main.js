@@ -8,8 +8,8 @@ import SiteTripListComponent from './components/trip-list.js';
 // import SiteFormComponent from './components/form.js';
 import SiteInfoComponent from './components/information.js';
 import SiteEventSortComponent from './components/event-sort.js';
-// import SiteNoEventComponent from './components/no-event.js';
-import TripContropper from './controller.js';
+import SiteNoEventComponent from './components/no-event.js';
+import TripContropper from './controllers/trip-controller.js';
 
 import {menuItems} from './mock/menu.js';
 import {filters} from './mock/filters.js';
@@ -35,9 +35,18 @@ const siteDayItemElement = document.querySelector(`.trip-days__item`);
 
 render(siteDayItemElement, new SiteEventListComponent(), RenderPosition.BEFOREEND);
 
-const tripController = new TripContropper();
 
-tripController.renderEvents();
+const EVENT_COUNT = 7;
+
+if (EVENT_COUNT === 0) {
+  render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
+}
+
+for (let i = 0; i < EVENT_COUNT; i++) {
+  const tripController = new TripContropper();
+  tripController.render();
+}
+
 
 // const siteEventListElement = document.querySelector(`.trip-events__list`);
 
