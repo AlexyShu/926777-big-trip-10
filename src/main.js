@@ -1,7 +1,7 @@
 import {render, RenderPosition} from './utils/render.js';
 import SiteMenuComponent from './components/menu.js';
 import SiteFilterComponent from './components/filters.js';
-// import SiteEventItemComponent from './components/event-item.js';
+import SiteEventItemComponent from './components/event-item.js';
 import SiteEventListComponent from './components/event-list.js';
 import SiteTripItemComponent from './components/trip-item.js';
 import SiteTripListComponent from './components/trip-list.js';
@@ -9,7 +9,7 @@ import SiteTripListComponent from './components/trip-list.js';
 import SiteInfoComponent from './components/information.js';
 import SiteEventSortComponent from './components/event-sort.js';
 import SiteNoEventComponent from './components/no-event.js';
-import TripContropper from './controllers/trip-controller.js';
+import TripController from './controllers/trip-controller.js';
 
 import {menuItems} from './mock/menu.js';
 import {filters} from './mock/filters.js';
@@ -34,7 +34,7 @@ render(siteTripDayElement, new SiteTripItemComponent(), RenderPosition.BEFOREEND
 const siteDayItemElement = document.querySelector(`.trip-days__item`);
 
 render(siteDayItemElement, new SiteEventListComponent(), RenderPosition.BEFOREEND);
-
+const siteEventListElement = document.querySelector(`.trip-events__list`);
 
 const EVENT_COUNT = 7;
 
@@ -42,45 +42,11 @@ if (EVENT_COUNT === 0) {
   render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
 }
 
+const events = [];
+
 for (let i = 0; i < EVENT_COUNT; i++) {
-  const tripController = new TripContropper();
-  tripController.render();
+  events.push(new SiteEventItemComponent());
 }
 
-
-// const siteEventListElement = document.querySelector(`.trip-events__list`);
-
-// const EVENT_COUNT = 7;
-
-// if (EVENT_COUNT === 0) {
-//   render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
-// }
-
-// for (let i = 0; i < EVENT_COUNT; i++) {
-//   const eventItem = new SiteEventItemComponent();
-//   const eventForm = new SiteFormComponent();
-//   const replaceFormToEvent = () => {
-//     siteEventListElement.replaceChild(eventItem.getElement(), eventForm.getElement());
-//   };
-//   const replaceEventToForm = () => {
-//     siteEventListElement.replaceChild(eventForm.getElement(), eventItem.getElement());
-//   };
-//   const afterRollupButtonClick = () => {
-//     replaceEventToForm();
-//     document.addEventListener(`keydown`, onEscPress);
-//   };
-//   eventItem.setRollupButton(afterRollupButtonClick);
-//   eventForm.getElement().addEventListener(`submit`, (evt) => {
-//     evt.preventDefault();
-//     replaceFormToEvent();
-//   });
-//   const onEscPress = (evt) => {
-//     if (evt.keyCode === KeyCode.ESC) {
-//       evt.preventDefault();
-//       replaceFormToEvent();
-//       document.removeEventListener(`keydown`, onEscPress);
-//     }
-//   };
-//   eventForm.setResetButton(replaceFormToEvent);
-//   render(siteEventListElement, eventItem, RenderPosition.BEFOREEND);
-// }
+const tripController = new TripController(siteEventListElement);
+tripController.render(events);
