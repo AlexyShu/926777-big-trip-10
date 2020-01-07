@@ -1,12 +1,14 @@
 import SiteFormComponent from '../components/form.js';
 import {render, RenderPosition, KeyCode} from '../utils/render.js';
+import SiteEventSortComponent from '../components/sort.js';
+import {SortType} from '../mock/sort.js';
 
 export default class TripController {
   constructor(container) {
     this._container = container;
   }
 
-  render(events) {
+  render(events, sort) {
     events.forEach((event) => {
       const eventForm = new SiteFormComponent();
       const replaceFormToEvent = () => {
@@ -37,6 +39,25 @@ export default class TripController {
 
       eventForm.setResetButton(replaceFormToEvent);
       render(this._container, event, RenderPosition.BEFOREEND);
+      render(this._container, sort, RenderPosition.AFTERBEGIN);
+
+      const eventSort = new SiteEventSortComponent();
+      eventSort.setSortEventChangeHandler((sortType) => {
+        let sortedEventss = [];
+
+        switch (sortType) {
+          case SortType.SortType.EVENT:
+            sortedEventss = events.slice();
+            break;
+          case SortType.TIME:
+            sortedEventss = events.slice().sort((a, b) => b.date - a.date);
+            break;
+          case SortType.PRICE:
+            sortedEventss = events.slice().sort((a, b) =>b.price - a.price);
+            break;
+        }
+
+      });
     });
   }
 }
