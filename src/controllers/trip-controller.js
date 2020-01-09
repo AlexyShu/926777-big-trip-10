@@ -6,9 +6,26 @@ import {SortType} from '../mock/sort.js';
 export default class TripController {
   constructor(container) {
     this._container = container;
+    this._sort = new SiteEventSortComponent();
   }
 
-  render(events, sort) {
+  render(events) {
+    this._sort.setSortTypeChangeHandler((sortType) => {
+      let sortedEvents = [];
+      switch (sortType) {
+        case SortType.EVENT:
+          sortedEvents = events.slice();
+          break;
+        case SortType.TIME:
+          sortedEvents = events.slice().sort((a, b) => b.date - a.date);
+          break;
+        case SortType.PRICE:
+          sortedEvents = events.slice().sort((a, b) =>b.price - a.price);
+          break;
+      }
+    });
+    render(this._container, this._sort, RenderPosition.AFTERBEGIN);
+
     events.forEach((event) => {
       const eventForm = new SiteFormComponent();
       const replaceFormToEvent = () => {
@@ -39,25 +56,6 @@ export default class TripController {
 
       eventForm.setResetButton(replaceFormToEvent);
       render(this._container, event, RenderPosition.BEFOREEND);
-      render(this._container, sort, RenderPosition.AFTERBEGIN);
-
-      const eventSort = new SiteEventSortComponent();
-      eventSort.setSortEventChangeHandler((sortType) => {
-        let sortedEventss = [];
-
-        switch (sortType) {
-          case SortType.SortType.EVENT:
-            sortedEventss = events.slice();
-            break;
-          case SortType.TIME:
-            sortedEventss = events.slice().sort((a, b) => b.date - a.date);
-            break;
-          case SortType.PRICE:
-            sortedEventss = events.slice().sort((a, b) =>b.price - a.price);
-            break;
-        }
-
-      });
     });
   }
 }

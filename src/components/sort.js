@@ -35,9 +35,7 @@ const createEventSortTemplate = () => {
 export default class SiteEventSort extends AbstractComponent {
   constructor() {
     super();
-
     this._currenSortType = SortType.EVENT;
-    this._form = this.getElement();
   }
   getTemplate() {
     return createEventSortTemplate();
@@ -45,22 +43,16 @@ export default class SiteEventSort extends AbstractComponent {
   setSortTypeChangeHandler(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
-
       if (!evt.target.classList.contains(`trip-sort__btn`)) {
         return;
       }
-
       const sortType = evt.target.dataset.sortType;
-
       if (this._currenSortType === sortType) {
         return;
       }
-
-      this._form.querySelector(`#sort-${this._currenSortType}`).removeAttribute(`checked`);
-      this._form.querySelector(`#sort-${sortType}`).setAttribute(`checked`);
-
+      this.getElement().querySelector(`#sort-${this._currenSortType}`).removeAttribute(`checked`);
+      this.getElement().querySelector(`#sort-${sortType}`).setAttribute(`checked`, true);
       this._currenSortType = sortType;
-
       handler(this._currenSortType);
     });
   }

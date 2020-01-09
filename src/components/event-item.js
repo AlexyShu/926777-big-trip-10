@@ -15,7 +15,7 @@ const createOffersTemplate = (items) => items.map((offer) => {
   .join(``);
 
 
-const createTaskCardTemplate = () => {
+const createTaskCardTemplate = (price, time, extraService) => {
   const type = getRandomArrayItem(types);
   return (
     `<li class="trip-events__item">
@@ -26,9 +26,9 @@ const createTaskCardTemplate = () => {
         <h3 class="event__title"> ${type.name} ${getRandomArrayItem(towns)}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="${getDateFormat(date)}T${getTimeFormat(date)}">${getTimeFormat(date)}</time>
+            <time class="event__start-time" datetime="${getDateFormat(time)}T${getTimeFormat(time)}">${getTimeFormat(time)}</time>
             &mdash;
-            <time class="event__end-time" datetime="${getDateFormat(date)}T${getTimeFormat(date)}">${getTimeFormat(date)}</time>
+            <time class="event__end-time" datetime="${getDateFormat(time)}T${getTimeFormat(time)}">${getTimeFormat(time)}</time>
           </p>
           <p class="event__duration">1H 30M</p>
         </div>
@@ -37,7 +37,7 @@ const createTaskCardTemplate = () => {
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
-        ${createOffersTemplate(offers)}
+        ${createOffersTemplate(extraService)}
         </ul>
         <button class="event__rollup-btn" type="button">
           <span class="visually-hidden">Open event</span>
@@ -49,8 +49,14 @@ const createTaskCardTemplate = () => {
 
 
 export default class SiteEventItem extends AbstractComponent {
+  constructor() {
+    super();
+    this._price = offer.price;
+    this._date = date;
+    this._offers = offers;
+  }
   getTemplate() {
-    return createTaskCardTemplate();
+    return createTaskCardTemplate(this._price, this._date, this._offers);
   }
   setRollupButton(handler) {
     this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, handler);

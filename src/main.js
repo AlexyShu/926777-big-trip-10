@@ -6,7 +6,6 @@ import SiteEventListComponent from './components/event-list.js';
 import SiteTripItemComponent from './components/trip-item.js';
 import SiteTripListComponent from './components/trip-list.js';
 import SiteInfoComponent from './components/information.js';
-import SiteEventSortComponent from './components/sort.js';
 import SiteNoEventComponent from './components/no-event.js';
 import TripController from './controllers/trip-controller.js';
 
@@ -45,6 +44,5 @@ for (let i = 0; i < EVENT_COUNT; i++) {
   events.push(new SiteEventItemComponent());
 }
 
-const sort = new SiteEventSortComponent();
 const tripController = new TripController(siteEventListElement);
-tripController.render(events, sort);
+tripController.render(events);
