@@ -1,4 +1,4 @@
-import {getRandomArrayItem} from '../utils/common.js';
+import {getRandomIntegerNumber} from '../utils/common.js';
 
 const types = [
   {
@@ -70,6 +70,11 @@ const offers = [
   }
 ];
 
-const offer = getRandomArrayItem(offers);
+const Price = {
+  MIN: 5,
+  MAX: 200,
+};
 
-export {types, offer, offers};
+const price = getRandomIntegerNumber(Price.MIN, Price.MAX);
+
+export {types, offers, price};

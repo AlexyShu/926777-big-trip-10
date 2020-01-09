@@ -1,9 +1,10 @@
 import {date, getTimeFormat, getDateFormat, getRandomArrayItem} from '../utils/common.js';
-import {types, offer, offers} from '../mock/event-item.js';
+import {types, offers, price} from '../mock/event-item.js';
 import {towns} from '../mock/information.js';
 import AbstractComponent from './abstract-component.js';
 
-const createOffersTemplate = (items) => items.map((offer) => {
+const createOffersTemplate = (items) => items.map((it) => {
+  const offer = getRandomArrayItem(offers);
   return (
     `<li class="event__offer">
       <span class="event__offer-title">${offer.name}</span>
@@ -15,7 +16,7 @@ const createOffersTemplate = (items) => items.map((offer) => {
   .join(``);
 
 
-const createTaskCardTemplate = (price, time, extraService) => {
+const createTaskCardTemplate = (coast, time, extraService) => {
   const type = getRandomArrayItem(types);
   return (
     `<li class="trip-events__item">
@@ -33,7 +34,7 @@ const createTaskCardTemplate = (price, time, extraService) => {
           <p class="event__duration">1H 30M</p>
         </div>
         <p class="event__price">
-          &euro;&nbsp;<span class="event__price-value">${offer.price}</span>
+          &euro;&nbsp;<span class="event__price-value">${coast}</span>
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
@@ -47,11 +48,10 @@ const createTaskCardTemplate = (price, time, extraService) => {
   );
 };
 
-
 export default class SiteEventItem extends AbstractComponent {
   constructor() {
     super();
-    this._price = offer.price;
+    this._price = price;
     this._date = date;
     this._offers = offers;
   }
