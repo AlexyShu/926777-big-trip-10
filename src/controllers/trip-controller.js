@@ -20,7 +20,7 @@ export default class TripController {
           sortedEvents = events.slice().sort((a, b) => b.date - a.date);
           break;
         case SortType.PRICE:
-          sortedEvents = events.slice().sort((a, b) =>b.price - a.price);
+          sortedEvents = events.slice().sort((a, b) => b.price - a.price);
           break;
       }
     });
