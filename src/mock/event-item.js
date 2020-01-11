@@ -1,5 +1,3 @@
-import {getRandomArrayItem} from '../utils/common.js';
-
 const types = [
   {
     icon: `taxi`,
@@ -70,6 +68,9 @@ const offers = [
   }
 ];
 
-const offer = getRandomArrayItem(offers);
+const Price = {
+  MIN: 5,
+  MAX: 200,
+};
 
-export {types, offer, offers};
+export {types, offers, Price};
