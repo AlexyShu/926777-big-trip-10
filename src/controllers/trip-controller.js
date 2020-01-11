@@ -1,7 +1,7 @@
-import {render, RenderPosition, KeyCode} from '../utils/render.js';
+import {render, RenderPosition} from '../utils/render.js';
 import SiteEventSortComponent from '../components/sort.js';
 import {SortType} from '../mock/sort.js';
-import SiteFormComponent from '../components/form.js';
+import PointController from './point-controller.js';
 
 export default class TripController {
   constructor(container) {
@@ -26,37 +26,12 @@ export default class TripController {
       this.render(eventItems);
     });
     render(this._container, this._sort, RenderPosition.AFTERBEGIN);
+    const siteEventListElement = document.querySelector(`.trip-events__list`);
+    const pointController = new PointController(siteEventListElement);
+
 
     eventItems.forEach((event) => {
-      const eventForm = new SiteFormComponent();
-      const replaceFormToEvent = () => {
-        this._container.replaceChild(event.getElement(), eventForm.getElement());
-      };
-      const replaceEventToForm = () => {
-        this._container.replaceChild(eventForm.getElement(), event.getElement());
-      };
-
-      const afterRollupButtonClick = () => {
-        replaceEventToForm();
-        document.addEventListener(`keydown`, onEscPress);
-      };
-
-      event.setRollupButton(afterRollupButtonClick);
-      eventForm.getElement().addEventListener(`submit`, (evt) => {
-        evt.preventDefault();
-        replaceFormToEvent();
-      });
-
-      const onEscPress = (evt) => {
-        if (evt.keyCode === KeyCode.ESC) {
-          evt.preventDefault();
-          replaceFormToEvent();
-          document.removeEventListener(`keydown`, onEscPress);
-        }
-      };
-
-      eventForm.setResetButton(replaceFormToEvent);
-      render(this._container, event, RenderPosition.BEFOREEND);
+      pointController.render(event);
     });
   }
 }
