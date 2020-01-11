@@ -8,7 +8,7 @@ import SiteTripListComponent from './components/trip-list.js';
 import SiteInfoComponent from './components/information.js';
 import SiteNoEventComponent from './components/no-event.js';
 import TripController from './controllers/trip-controller.js';
-import PointController from './controllers/point-controller.js';
+// import PointController from './controllers/point-controller.js';
 
 import {menuItems} from './mock/menu.js';
 import {filters} from './mock/filters.js';
@@ -39,9 +39,9 @@ if (EVENT_COUNT === 0) {
   render(siteTripEventElement, new SiteNoEventComponent(), RenderPosition.BEFOREEND);
 }
 
-const event = new SiteEventItemComponent();
-const pointController = new PointController(siteEventListElement);
-pointController.render(event);
+// const event = new SiteEventItemComponent();
+// const pointController = new PointController(siteEventListElement);
+// pointController.render(event);
 
 const events = [];
 
