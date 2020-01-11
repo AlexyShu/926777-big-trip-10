@@ -1,5 +1,5 @@
-import {date, getTimeFormat, getDateFormat, getRandomArrayItem} from '../utils/common.js';
-import {types, offers, price} from '../mock/event-item.js';
+import {date, getTimeFormat, getDateFormat, getRandomArrayItem, getRandomNumber} from '../utils/common.js';
+import {types, offers, Price} from '../mock/event-item.js';
 import {towns} from '../mock/information.js';
 import AbstractComponent from './abstract-component.js';
 
@@ -51,7 +51,7 @@ const createTaskCardTemplate = (coast, time, extraService) => {
 export default class SiteEventItem extends AbstractComponent {
   constructor() {
     super();
-    this._price = price;
+    this._price = getRandomNumber(Price.MIN, Price.MAX);
     this._date = date;
     this._offers = offers;
   }

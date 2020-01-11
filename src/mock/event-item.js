@@ -1,5 +1,3 @@
-import {getRandomIntegerNumber} from '../utils/common.js';
-
 const types = [
   {
     icon: `taxi`,
@@ -75,6 +73,4 @@ const Price = {
   MAX: 200,
 };
 
-const price = getRandomIntegerNumber(Price.MIN, Price.MAX);
-
-export {types, offers, price};
+export {types, offers, Price};

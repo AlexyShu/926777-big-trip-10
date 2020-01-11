@@ -10,22 +10,24 @@ export default class TripController {
   }
 
   render(events) {
+    let eventItems = events.slice();
     this._sort.setSortTypeChangeHandler((sortType) => {
       switch (sortType) {
         case SortType.EVENT:
-          events.slice();
+          eventItems = events.slice();
           break;
         case SortType.TIME:
-          events.slice().sort((a, b) => b.date - a.date);
+          eventItems.sort((a, b) => b._date - a._date);
           break;
         case SortType.PRICE:
-          events.slice().sort((a, b) => b.price - a.price);
+          eventItems.sort((a, b) => b._price - a._price);
           break;
       }
+      this.render(eventItems);
     });
     render(this._container, this._sort, RenderPosition.AFTERBEGIN);
 
-    events.forEach((event) => {
+    eventItems.forEach((event) => {
       const eventForm = new SiteFormComponent();
       const replaceFormToEvent = () => {
         this._container.replaceChild(event.getElement(), eventForm.getElement());
