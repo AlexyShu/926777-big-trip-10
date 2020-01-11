@@ -2,9 +2,10 @@ import SiteFormComponent from '../components/form.js';
 import {render, RenderPosition, KeyCode} from '../utils/render.js';
 
 export default class PointController {
-  constructor(container) {
+  constructor(container, onDataChange) {
     this._container = container;
     this._form = new SiteFormComponent();
+    this._onDataChange = onDataChange;
   }
   render(event) {
     const replaceFormToEvent = () => {
@@ -35,5 +36,11 @@ export default class PointController {
 
     this._form.setResetButton(replaceFormToEvent);
     render(this._container, event, RenderPosition.BEFOREEND);
+
+    this._form.setOnFavotiteBtnClick(() => {
+      this._onDataChange(this, event, Object.assign({}, event, {
+        isFavorite: !event.isFavorite,
+      }));
+    });
   }
 }
