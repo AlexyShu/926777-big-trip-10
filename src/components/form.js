@@ -1,6 +1,7 @@
 import {getRandomIntegerNumber, getRandomArrayItem} from '../utils/common.js';
 import {descriptions, pictures} from '../mock/form.js';
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
+import {types} from '../mock/event-item.js';
 
 const getRandomDescription = () => {
   const descriptionLength = getRandomIntegerNumber(1, 3);
@@ -18,13 +19,14 @@ const createPicturesTemplate = (pics) => {
 const createTaskFormTemplate = () => {
   const info = getRandomDescription();
   const picturesTemplate = createPicturesTemplate(pictures);
+  const type = getRandomArrayItem(types);
   return (
     `<form class="trip-events__item  event  event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+            <img class="event__type-icon" width="17" height="17" src="img/icons/${type.icon}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
           <div class="event__type-list">
@@ -133,7 +135,13 @@ const createTaskFormTemplate = () => {
   );
 };
 
-export default class SiteForm extends AbstractComponent {
+export default class SiteForm extends AbstractSmartComponent {
+  constructor() {
+    super();
+    this._subscribeOnEvents();
+    this.typeName = types.name;
+  }
+
   getTemplate() {
     return createTaskFormTemplate();
   }
@@ -144,5 +152,19 @@ export default class SiteForm extends AbstractComponent {
 
   setOnFavotiteBtnClick(handler) {
     this.getElement().querySelector(`.event__favorite-checkbox`).addEventListener(`click`, handler);
+  }
+
+  recoveryListeners() {
+    this._subscribeOnEvents();
+  }
+
+  _subscribeOnEvents() {
+    this.getElement().querySelector(`.event__type-list`).addEventListener(`click`, (evt) => {
+      if (evt.target.tagName === `INPUT`) {
+        this.typeName = evt.target.value;
+
+        this.rerender();
+      }
+    });
   }
 }

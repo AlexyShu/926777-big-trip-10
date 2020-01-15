@@ -42,4 +42,9 @@ const getRandomDate = () => {
 
 const date = getRandomDate();
 
-export {date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
+const Mode = {
+  DEFAULT: `default`,
+  EDIT: `edit`
+};
+
+export {Mode, date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};

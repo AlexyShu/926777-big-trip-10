@@ -1,17 +1,24 @@
 import SiteFormComponent from '../components/form.js';
 import {render, RenderPosition, KeyCode} from '../utils/render.js';
+import {Mode} from '../utils/common.js';
 
 export default class PointController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._form = new SiteFormComponent();
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
+    this._mode = Mode.DEFAULT;
   }
+
   render(event) {
+
     const replaceFormToEvent = () => {
       this._container.replaceChild(event.getElement(), this._form.getElement());
     };
+
     const replaceEventToForm = () => {
+      this._onViewChange();
       this._container.replaceChild(this._form.getElement(), event.getElement());
     };
 
@@ -42,5 +49,11 @@ export default class PointController {
         isFavorite: !event.isFavorite,
       }));
     });
+
+  }
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this.replaceFormToEvent();
+    }
   }
 }

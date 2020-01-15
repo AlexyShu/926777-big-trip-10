@@ -8,7 +8,9 @@ export default class TripController {
     this._container = container;
     this._sort = new SiteEventSortComponent();
     this._events = [];
+    this._pointControllers = [];
     this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
   }
 
   render(events) {
@@ -30,7 +32,7 @@ export default class TripController {
 
     render(this._container, this._sort, RenderPosition.AFTERBEGIN);
     const siteEventListElement = document.querySelector(`.trip-events__list`);
-    const pointController = new PointController(siteEventListElement, this._onDataChange);
+    const pointController = new PointController(siteEventListElement, this._onDataChange, this._onViewChange);
 
     eventItems.forEach((event) => {
       pointController.render(event);
@@ -44,5 +46,9 @@ export default class TripController {
     }
     this._events = [].concat(this._events.slice(0, index), newData, this._events.slice(index + 1));
     pointController.render(this._events[index]);
+  }
+
+  _onViewChange() {
+    this._pointControllers.forEach((it) => it.setDefaultView());
   }
 }
