@@ -1,3 +1,4 @@
+import flatpickr from 'flatpickr';
 import {getRandomIntegerNumber, getRandomArrayItem} from '../utils/common.js';
 import {descriptions, pictures} from '../mock/form.js';
 import AbstractComponent from './abstract-component.js';
