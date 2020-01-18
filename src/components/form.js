@@ -1,7 +1,8 @@
 import {getRandomIntegerNumber, getRandomArrayItem} from '../utils/common.js';
 import {descriptions, pictures} from '../mock/form.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
-import {types} from '../mock/event-item.js';
+import {types, offers} from '../mock/event-item.js';
+import {towns} from '../mock/information.js';
 
 const getRandomDescription = () => {
   const descriptionLength = getRandomIntegerNumber(1, 3);
@@ -16,10 +17,36 @@ const createPicturesTemplate = (pics) => {
   return pics.map((picture) => `<img class="event__photo" src="${picture}" alt="Event photo"></img>`).join(`\n`);
 };
 
+const createDestinationOptions = (destinations) => {
+  return destinations.map((destination) => {
+    return (
+      `<option value="${destination}"></option>`
+    );
+  }).join(`\n`);
+};
+
+const createOffersTemplate = (items) => items.map((it) => {
+  const offer = getRandomArrayItem(offers);
+  return (
+    `<div class="event__available-offers">
+    <div class="event__offer-selector">
+      <input class="event__offer-checkbox  visually-hidden" id="event-${offer.name}-1" type="checkbox" name="event-${offer.name}" ${it.check ? `checked` : ``}>
+      <label class="event__offer-label" for="event-${offer.name}-1">
+        <span class="event__offer-title">${offer.name}</span>
+        &plus;
+        &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
+      </label>
+    </div>`
+  );
+})
+  .join(``);
+
 const createTaskFormTemplate = () => {
   const info = getRandomDescription();
   const picturesTemplate = createPicturesTemplate(pictures);
   const type = getRandomArrayItem(types);
+  const offer = getRandomArrayItem(offers);
+  const destination = createDestinationOptions(towns);
   return (
     `<form class="trip-events__item  event  event--edit" action="#" method="post">
       <header class="event__header">
@@ -80,14 +107,11 @@ const createTaskFormTemplate = () => {
         </div>
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-1">
-            Sightseeing at
+          ${offer.name}
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
           <datalist id="destination-list-1">
-            <option value="Amsterdam"></option>
-            <option value="Geneva"></option>
-            <option value="Chamonix"></option>
-            <option value="Saint Petersburg"></option>
+          ${destination}
           </datalist>
         </div>
         <div class="event__field-group  event__field-group--time">
@@ -121,6 +145,17 @@ const createTaskFormTemplate = () => {
           <span class="visually-hidden">Open event</span>
         </button>
       </header>
+
+
+      <section class="event__details">
+
+      <section class="event__section  event__section--offers">
+        <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+        ${createOffersTemplate(offers)}
+
+      </section>
+
+
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description"> ${info} </p>
@@ -138,8 +173,11 @@ const createTaskFormTemplate = () => {
 export default class SiteForm extends AbstractSmartComponent {
   constructor() {
     super();
-    this._subscribeOnEvents();
-    this.typeName = types.name;
+    this._type = getRandomArrayItem(types);
+    this._town = getRandomArrayItem(towns);
+    this._offer = getRandomArrayItem(offers);
+    // this._destination = getRandomIntegerNumber(descriptions);
+    this._addListeners();
   }
 
   getTemplate() {
@@ -155,16 +193,27 @@ export default class SiteForm extends AbstractSmartComponent {
   }
 
   recoveryListeners() {
-    this._subscribeOnEvents();
+    this._addListeners();
   }
 
-  _subscribeOnEvents() {
-    this.getElement().querySelector(`.event__type-list`).addEventListener(`click`, (evt) => {
-      if (evt.target.tagName === `INPUT`) {
-        this.typeName = evt.target.value;
+  _addListeners() {
+    const element = this.getElement();
+
+    const eventInput = element.querySelector(`.event__input--destination`);
+    eventInput.addEventListener(`change`, (evt) => {
+      this._town = evt.target.value;
+
+      this.rerender();
+    });
+
+
+    element.querySelectorAll(`.event__type-input`).forEach((it) => {
+      it.addEventListener(`change`, (evt) => {
+        this._type.name = evt.target.value.toUpperCase();
+        this._offer = this._offer.name;
 
         this.rerender();
-      }
+      });
     });
   }
 }

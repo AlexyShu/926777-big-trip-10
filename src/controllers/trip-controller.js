@@ -14,6 +14,7 @@ export default class TripController {
   }
 
   render(events) {
+    this._pointControllers = [];
     let eventItems = events.slice();
     this._sort.setSortTypeChangeHandler((sortType) => {
       switch (sortType) {
@@ -32,9 +33,10 @@ export default class TripController {
 
     render(this._container, this._sort, RenderPosition.AFTERBEGIN);
     const siteEventListElement = document.querySelector(`.trip-events__list`);
-    const pointController = new PointController(siteEventListElement, this._onDataChange, this._onViewChange);
 
     eventItems.forEach((event) => {
+      const pointController = new PointController(siteEventListElement, this._onDataChange, this._onViewChange);
+      this._pointControllers.push(pointController);
       pointController.render(event);
     });
   }
@@ -49,6 +51,8 @@ export default class TripController {
   }
 
   _onViewChange() {
-    this._pointControllers.forEach((it) => it.setDefaultView());
+    this._pointControllers.forEach((it) => {
+      it.setDefaultView();
+    });
   }
 }
