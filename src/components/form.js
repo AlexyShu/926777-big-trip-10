@@ -176,6 +176,7 @@ export default class SiteForm extends AbstractSmartComponent {
     const eventInput = element.querySelector(`.event__input--destination`);
     eventInput.addEventListener(`change`, (evt) => {
       this._town = evt.target.value;
+      this._info = getRandomDescription();
       this.rerender();
     });
 
