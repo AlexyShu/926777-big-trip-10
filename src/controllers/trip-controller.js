@@ -1,15 +1,20 @@
-import {render, RenderPosition, KeyCode} from '../utils/render.js';
+import {render, RenderPosition} from '../utils/render.js';
 import SiteEventSortComponent from '../components/sort.js';
 import {SortType} from '../mock/sort.js';
-import SiteFormComponent from '../components/form.js';
+import PointController from './point-controller.js';
 
 export default class TripController {
   constructor(container) {
     this._container = container;
     this._sort = new SiteEventSortComponent();
+    this._events = [];
+    this._pointControllers = [];
+    this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
   }
 
   render(events) {
+    this._pointControllers = [];
     let eventItems = events.slice();
     this._sort.setSortTypeChangeHandler((sortType) => {
       switch (sortType) {
@@ -25,38 +30,29 @@ export default class TripController {
       }
       this.render(eventItems);
     });
+
     render(this._container, this._sort, RenderPosition.AFTERBEGIN);
+    const siteEventListElement = document.querySelector(`.trip-events__list`);
 
     eventItems.forEach((event) => {
-      const eventForm = new SiteFormComponent();
-      const replaceFormToEvent = () => {
-        this._container.replaceChild(event.getElement(), eventForm.getElement());
-      };
-      const replaceEventToForm = () => {
-        this._container.replaceChild(eventForm.getElement(), event.getElement());
-      };
+      const pointController = new PointController(siteEventListElement, this._onDataChange, this._onViewChange);
+      this._pointControllers.push(pointController);
+      pointController.render(event);
+    });
+  }
 
-      const afterRollupButtonClick = () => {
-        replaceEventToForm();
-        document.addEventListener(`keydown`, onEscPress);
-      };
+  _onDataChange(pointController, oldData, newData) {
+    const index = this._events.findIndex((it) => it === oldData);
+    if (index === -1) {
+      return;
+    }
+    this._events = [].concat(this._events.slice(0, index), newData, this._events.slice(index + 1));
+    pointController.render(this._events[index]);
+  }
 
-      event.setRollupButton(afterRollupButtonClick);
-      eventForm.getElement().addEventListener(`submit`, (evt) => {
-        evt.preventDefault();
-        replaceFormToEvent();
-      });
-
-      const onEscPress = (evt) => {
-        if (evt.keyCode === KeyCode.ESC) {
-          evt.preventDefault();
-          replaceFormToEvent();
-          document.removeEventListener(`keydown`, onEscPress);
-        }
-      };
-
-      eventForm.setResetButton(replaceFormToEvent);
-      render(this._container, event, RenderPosition.BEFOREEND);
+  _onViewChange() {
+    this._pointControllers.forEach((it) => {
+      it.setDefaultView();
     });
   }
 }

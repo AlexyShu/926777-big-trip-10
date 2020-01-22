@@ -28,20 +28,20 @@ const types = [
     name: `flight to`
   },
   {
-    name: `check-in`,
-    sring: `check-in in hotel in`
+    icon: `check-in`,
+    name: `check-in in hotel in`
   },
   {
-    name: `sightseeing`,
-    sring: `sightseeing in`
+    icon: `sightseeing`,
+    name: `sightseeing in`
   },
   {
-    name: `restaurant`,
-    sring: `restaurant in`
+    icon: `restaurant`,
+    name: `restaurant in`
   },
   {
-    name: `trip`,
-    sring: `trip to`
+    icon: `trip`,
+    name: `trip to`
   }
 ];
 
