@@ -1,39 +1,62 @@
 import SiteFormComponent from '../components/form.js';
-// import {render, RenderPosition, KeyCode} from '../utils/render.js';
+import {render, RenderPosition, KeyCode} from '../utils/render.js';
+import {Mode} from '../utils/common.js';
 
 export default class PointController {
-  constructor(container) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._form = new SiteFormComponent();
+    this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
+    this._mode = Mode.DEFAULT;
+    this._event = null;
   }
-  // render(event) {
-  //   const replaceFormToEvent = () => {
-  //     this._container.replaceChild(event.getElement(), this._form.getElement());
-  //   };
-  //   const replaceEventToForm = () => {
-  //     this._container.replaceChild(this._form.getElement(), event.getElement());
-  //   };
 
-  //   const afterRollupButtonClick = () => {
-  //     replaceEventToForm();
-  //     document.addEventListener(`keydown`, onEscPress);
-  //   };
+  _replaceFormToEvent() {
+    this._mode = Mode.DEFAULT;
+    this._container.replaceChild(this._event.getElement(), this._form.getElement());
+  }
 
-  //   event.setRollupButton(afterRollupButtonClick);
-  //   this._form.getElement().addEventListener(`submit`, (evt) => {
-  //     evt.preventDefault();
-  //     replaceFormToEvent();
-  //   });
+  _replaceEventToForm() {
+    this._onViewChange();
+    this._mode = Mode.EDIT;
+    this._container.replaceChild(this._form.getElement(), this._event.getElement());
+  }
 
-  //   const onEscPress = (evt) => {
-  //     if (evt.keyCode === KeyCode.ESC) {
-  //       evt.preventDefault();
-  //       replaceFormToEvent();
-  //       document.removeEventListener(`keydown`, onEscPress);
-  //     }
-  //   };
+  _afterRollupButtonClick() {
+    this._replaceEventToForm();
+    document.addEventListener(`keydown`, this._onEscPress);
+  }
 
-  //   this._form.setResetButton(replaceFormToEvent);
-  //   render(this._container, event, RenderPosition.BEFOREEND);
-  // }
+  _onEscPress(evt) {
+    if (evt.keyCode === KeyCode.ESC) {
+      evt.preventDefault();
+      this._replaceFormToEvent();
+      document.removeEventListener(`keydown`, this._onEscPress);
+    }
+  }
+
+  render(event) {
+    this._event = event;
+    this._event.setRollupButton(this._afterRollupButtonClick.bind(this));
+    this._form.getElement().addEventListener(`submit`, (evt) => {
+      evt.preventDefault();
+      this._replaceFormToEvent();
+    });
+
+    this._form.setResetButton(this._replaceFormToEvent);
+    render(this._container, this._event, RenderPosition.BEFOREEND);
+
+    this._form.setOnFavotiteBtnClick(() => {
+      this._onDataChange(this, this._event, Object.assign({}, this._event, {
+        isFavorite: !this._event.isFavorite,
+      }));
+    });
+
+  }
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceFormToEvent();
+    }
+  }
 }

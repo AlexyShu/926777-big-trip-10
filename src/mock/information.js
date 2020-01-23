@@ -1,3 +1,3 @@
-const towns = [`Amsterdam`, `Geneva`, `Chamonix`];
+const towns = [`Amsterdam`, `Geneva`, `Chamonix`, `Saint Petersburg`];
 
 export {towns};
