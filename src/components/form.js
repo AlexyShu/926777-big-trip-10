@@ -52,16 +52,6 @@ const createIconsTemplate = (items) => items.map((it) => {
 })
   .join(``);
 
-const createPlaceholdersTemplate = (items) => items.map((it) => {
-  return (
-    `<div class="event__type-item">
-          <input id="event-type-${it.name}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${it.name}">
-          <label class="event__type-label  event__type-label--${it.name}" for="event-type-${it.name}-1">${it.name}</label>
-        </div>`
-  );
-})
-  .join(``);
-
 export default class SiteForm extends AbstractSmartComponent {
   constructor() {
 
@@ -75,7 +65,10 @@ export default class SiteForm extends AbstractSmartComponent {
     this._destination = createDestinationOptions(towns);
     this._info = getRandomDescription();
     this._picturesTemplate = createPicturesTemplate(pictures);
+    this._flatpickr = null;
+    this._defaultDate = `18/03/19 00:00`;
 
+    this._applyFlatpickr();
     this._addListeners();
   }
 
@@ -91,12 +84,8 @@ export default class SiteForm extends AbstractSmartComponent {
                  <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
                  <div class="event__type-list">
                    <fieldset class="event__type-group">
-                     <legend class="visually-hidden">Transfer</legend>
-                   ${createIconsTemplate(types)}
-                   </fieldset>
-                   <fieldset class="event__type-group">
                      <legend class="visually-hidden">Activity</legend>
-                   ${createPlaceholdersTemplate(types)}
+                   ${createIconsTemplate(types)}
                    </fieldset>
                  </div>
                </div>
@@ -113,12 +102,12 @@ export default class SiteForm extends AbstractSmartComponent {
                  <label class="visually-hidden" for="event-start-time-1">
                    From
                  </label>
-                 <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 00:00">
+                 <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${this._defaultDate}">
                  &mdash;
                  <label class="visually-hidden" for="event-end-time-1">
                    To
                  </label>
-                 <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 00:00">
+                 <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${this._defaultDate}">
                </div>
                <div class="event__field-group  event__field-group--price">
                  <label class="event__label" for="event-price-1">
@@ -159,6 +148,19 @@ export default class SiteForm extends AbstractSmartComponent {
     );
   }
 
+  removeElement() {
+    if (this._flatpickr) {
+      this._flatpickr.destroy();
+      this._flatpickr = null;
+    }
+    super.removeElement();
+  }
+
+  rerender() {
+    super.rerender();
+    this._applyFlatpickr();
+  }
+
   setResetButton(handler) {
     this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, handler);
   }
@@ -169,6 +171,24 @@ export default class SiteForm extends AbstractSmartComponent {
 
   recoveryListeners() {
     this._addListeners();
+  }
+
+  _applyFlatpickr() {
+    if (this._flatpickr) {
+      this._flatpickr.destroy();
+      this._flatpickr = null;
+    }
+
+    if (this._isDateShowing) {
+      const dateElement = this.getElement().querySelector(`.event__input--time`);
+      this._flatpickr = flatpickr(dateElement, {
+        enableTime: true,
+        dateFormat: `d/m/y H:i`,
+        minDate: `today`,
+        defaultDate: this.defaultDate,
+        allowInput: true,
+      });
+    }
   }
 
   _addListeners() {
