@@ -1,3 +1,24 @@
+import moment from 'moment';
+
+const timeFormat = (date) => {
+  return moment(date).format(`hh:mm`);
+};
+
+const dateFormat = (date) => {
+  return moment(date).format();
+};
+
+const calculateTimeInterval = (time1, time2) => {
+  const daysInt = moment(time2).diff(moment(time1), `days`);
+  const hoursInt = moment(time2).diff(moment(time1), `hours`) - daysInt * 24;
+  const minutesInt = moment(time2).diff(moment(time1), `minutes`) - daysInt * 60 * 24 - hoursInt * 60;
+
+  const formattedInt = `${daysInt > 0 ? castInterval(daysInt, `D`) : ``} ${hoursInt > 0 ? castInterval(hoursInt, `H`) : ``} ${castInterval(minutesInt, `M`)}`;
+  return formattedInt;
+};
+
+const castInterval = (timeValue, unitOfTime) => timeValue < 10 ? `0${timeValue}${unitOfTime}` : `${timeValue}${unitOfTime}`;
+
 const getRandomIntegerNumber = (min, max) => {
   return min + Math.floor(max * Math.random());
 };
@@ -15,22 +36,22 @@ const getZeroFormat = (value) => {
   return value < 10 ? `0${value}` : String(value);
 };
 
-const getTimeFormat = (dateUnix) => {
-  const date = new Date(dateUnix);
+// const getTimeFormat = (dateUnix) => {
+//   const date = new Date(dateUnix);
 
-  const hours = getZeroFormat(date.getHours());
-  const minutes = getZeroFormat(date.getMinutes());
-  return `${hours}:${minutes}`;
-};
+//   const hours = getZeroFormat(date.getHours());
+//   const minutes = getZeroFormat(date.getMinutes());
+//   return `${hours}:${minutes}`;
+// };
 
-const getDateFormat = (dateUnix) => {
-  const date = new Date(dateUnix);
+// const getDateFormat = (dateUnix) => {
+//   const date = new Date(dateUnix);
 
-  const year = date.getFullYear();
-  const month = getZeroFormat(date.getMonth() + 1);
-  const day = getZeroFormat(date.getDate());
-  return `${year}-${month}-${day}`;
-};
+//   const year = date.getFullYear();
+//   const month = getZeroFormat(date.getMonth() + 1);
+//   const day = getZeroFormat(date.getDate());
+//   return `${year}-${month}-${day}`;
+// };
 
 const getRandomDate = () => {
   return (
@@ -47,4 +68,4 @@ const Mode = {
   EDIT: `edit`
 };
 
-export {Mode, date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat, getZeroFormat};
+export {Mode, date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getZeroFormat, calculateTimeInterval, timeFormat, dateFormat};

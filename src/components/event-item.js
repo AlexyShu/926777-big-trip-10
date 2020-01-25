@@ -1,4 +1,4 @@
-import {date, getTimeFormat, getDateFormat, getRandomArrayItem, getRandomNumber} from '../utils/common.js';
+import {date, getRandomArrayItem, getRandomNumber, timeFormat, dateFormat, calculateTimeInterval} from '../utils/common.js';
 import {types, offers, Price} from '../mock/event-item.js';
 import {towns} from '../mock/information.js';
 import AbstractComponent from './abstract-component.js';
@@ -16,7 +16,7 @@ const createOffersTemplate = (items) => items.map((it) => {
   .join(``);
 
 
-const createTaskCardTemplate = (coast, time, extraService) => {
+const createTaskCardTemplate = (coast, startDate, endDate, extraService) => {
   const type = getRandomArrayItem(types);
   return (
     `<li class="trip-events__item">
@@ -27,11 +27,11 @@ const createTaskCardTemplate = (coast, time, extraService) => {
         <h3 class="event__title"> ${type.name} ${getRandomArrayItem(towns)}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="${getDateFormat(time)}T${getTimeFormat(time)}">${getTimeFormat(time)}</time>
+            <time class="event__start-time" datetime="${dateFormat(startDate)}">${timeFormat(startDate)}</time>
             &mdash;
-            <time class="event__end-time" datetime="${getDateFormat(time)}T${getTimeFormat(time)}">${getTimeFormat(time)}</time>
+            <time class="event__end-time" datetime="${dateFormat(endDate)}">${timeFormat(endDate)}</time>
           </p>
-          <p class="event__duration">1H 30M</p>
+          <p class="event__duration">${calculateTimeInterval(startDate, endDate)}</p>
         </div>
         <p class="event__price">
           &euro;&nbsp;<span class="event__price-value">${coast}</span>
@@ -52,11 +52,12 @@ export default class SiteEventItem extends AbstractComponent {
   constructor() {
     super();
     this._price = getRandomNumber(Price.MIN, Price.MAX);
-    this._date = date;
     this._offers = offers;
+    this._startDate = Math.min(date, date);
+    this._endtDate = Math.max(date, date);
   }
   getTemplate() {
-    return createTaskCardTemplate(this._price, this._date, this._offers);
+    return createTaskCardTemplate(this._price, this._startDate, this._endtDate, this._offers);
   }
   setRollupButton(handler) {
     this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, handler);
