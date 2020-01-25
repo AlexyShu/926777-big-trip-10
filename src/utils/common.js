@@ -47,4 +47,4 @@ const Mode = {
   EDIT: `edit`
 };
 
-export {Mode, date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat};
+export {Mode, date, getRandomIntegerNumber, getRandomNumber, getRandomArrayItem, getTimeFormat, getDateFormat, getZeroFormat};

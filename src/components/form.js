@@ -1,5 +1,5 @@
 import flatpickr from 'flatpickr';
-import {getRandomIntegerNumber, getRandomArrayItem} from '../utils/common.js';
+import {getRandomIntegerNumber, getRandomArrayItem, getZeroFormat, getRandomNumber} from '../utils/common.js';
 import {descriptions, pictures} from '../mock/form.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {types, offers} from '../mock/event-item.js';
@@ -66,7 +66,8 @@ export default class SiteForm extends AbstractSmartComponent {
     this._info = getRandomDescription();
     this._picturesTemplate = createPicturesTemplate(pictures);
     this._flatpickr = null;
-    this._defaultDate = `18/03/19 00:00`;
+    this._startDate = `${getZeroFormat(getRandomNumber(1, 31))}/${getZeroFormat(getRandomNumber(1, 12))}/${getZeroFormat(getRandomNumber(0, 99))} ${getZeroFormat(getRandomNumber(0, 24))}:${getZeroFormat(getRandomNumber(0, 59))}`;
+    this._endDate = `${getZeroFormat(getRandomNumber(1, 31))}/${getZeroFormat(getRandomNumber(1, 12))}/${getZeroFormat(getRandomNumber(0, 99))} ${getZeroFormat(getRandomNumber(0, 24))}:${getZeroFormat(getRandomNumber(0, 59))}`;
 
     this._applyFlatpickr();
     this._addListeners();
@@ -102,12 +103,12 @@ export default class SiteForm extends AbstractSmartComponent {
                  <label class="visually-hidden" for="event-start-time-1">
                    From
                  </label>
-                 <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${this._defaultDate}">
+                 <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${this._startDate} 00:00">
                  &mdash;
                  <label class="visually-hidden" for="event-end-time-1">
                    To
                  </label>
-                 <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${this._defaultDate}">
+                 <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${this._endDate} 00:00">
                </div>
                <div class="event__field-group  event__field-group--price">
                  <label class="event__label" for="event-price-1">
@@ -179,16 +180,18 @@ export default class SiteForm extends AbstractSmartComponent {
       this._flatpickr = null;
     }
 
-    if (this._isDateShowing) {
-      const dateElement = this.getElement().querySelector(`.event__input--time`);
-      this._flatpickr = flatpickr(dateElement, {
-        enableTime: true,
-        dateFormat: `d/m/y H:i`,
-        minDate: `today`,
-        defaultDate: this.defaultDate,
-        allowInput: true,
-      });
-    }
+    this._setFlatpickr(this.getElement().querySelector(`#event-start-time-1`), this._startDate);
+    this._setFlatpickr(this.getElement().querySelector(`#event-end-time-1`), this._endDate);
+  }
+
+  _setFlatpickr(input, defaultTime) {
+    this._flatpickr = flatpickr(input, {
+      enableTime: true,
+      dateFormat: `d/m/y H:i`,
+      minDate: `today`,
+      defaultDate: defaultTime,
+      allowInput: true,
+    });
   }
 
   _addListeners() {
